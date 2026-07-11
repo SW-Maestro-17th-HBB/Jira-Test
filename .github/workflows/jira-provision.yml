@@ -4,7 +4,6 @@ on:
   repository_dispatch:
     types: [jira-story]
 
-# 같은 Jira Story 키에 대한 동시 실행 차단
 concurrency:
   group: jira-story-${{ github.event.client_payload.jiraKey }}
   cancel-in-progress: false
@@ -17,6 +16,9 @@ jobs:
   provision:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
